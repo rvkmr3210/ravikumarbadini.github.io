@@ -1,0 +1,151 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ravi Kumar Badini - Senior Android Developer</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; }
+        h1 { color: #2c3e50; }
+        h2 { color: #34495e; border-bottom: 2px solid #ecf0f1; padding-bottom: 5px; }
+        .contact { font-size: 0.9em; color: #7f8c8d; }
+        .section { margin-bottom: 20px; }
+        .project { margin-left: 20px; }
+        ul { list-style-type: disc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ravi Kumar Badini</h1>
+            <p class="contact">Senior Android Developer | <a href="mailto:rvkmr3210@gmail.com">rvkmr3210@gmail.com</a> | +91 9000620543 | <a href="https://www.linkedin.com/in/ravi-kumar-badini">linkedin.com/in/ravi-kumar-badini</a></p>
+            <p>Results-oriented Android developer with 6 years of experience in designing, developing, and maintaining high-performance mobile applications. Proficient in Kotlin, with a deep understanding of the mobile software development lifecycle, UI/UX design principles, and RESTful API integration. Adept at working in agile environments and collaborating with cross-functional teams to deliver user-centric solutions.</p>
+        </header>
+
+        <section class="section">
+            <h2>Professional Experience</h2>
+            <ul>
+                <li><strong>Senior Engineer-Android, Duco Consultancy, Hyderabad</strong> (Feb 2023 - Present)
+                    <ul class="project">
+                        <li>Developed and maintained features for a high-traffic e-commerce Android app.</li>
+                        <li>Collaborated with designers and product managers to create seamless user interfaces.</li>
+                        <li>Managed the entire app release cycle, from beta testing to publishing updates on the Google Play Store.</li>
+                        <li>Participated in daily stand-ups, sprint planning, and retrospectives as part of an Agile development team.</li>
+                    </ul>
+                </li>
+                <li><strong>Android Developer, Appit Ventures Pvt Ltd, Hyderabad</strong> (May 2018 - Jan 2023)
+                    <ul class="project">
+                        <li>Worked closely with backend teams to integrate RESTful APIs, ensuring smooth data exchange and real-time synchronization.</li>
+                        <li>Integrated third-party libraries and APIs, including Google Maps, Firebase, and payment gateways, enhancing app functionality and user engagement.</li>
+                        <li>Implemented MVVM architecture and data-binding techniques to improve code maintainability and scalability.</li>
+                        <li>Conducted thorough testing and debugging to ensure application reliability and performance across different devices and OS versions.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Education</h2>
+            <ul>
+                <li><strong>Bachelor of Technology in Computer Science & Engineering</strong><br>Viswa Bharathi College of Engineering, JNTU-Hyderabad (2010 - 2014)</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Technical Skills</h2>
+            <ul>
+                <li>Programming Languages: Java, Kotlin</li>
+                <li>Android Development: Android SDK, Android Studio, Jetpack Components (LiveData, ViewModel, Room, Compose UI), MVVM Architecture</li>
+                <li>APIs and Backend: RESTful APIs, Firebase, Retrofit, Dynamic Yield API</li>
+                <li>UI/UX: Material Design, XML, Custom Views</li>
+                <li>Dependency Injection: Dagger, Hilt</li>
+                <li>Version Control: Git, GitHub, Bitbucket</li>
+                <li>Testing: JUnit, Espresso, Mockito</li>
+                <li>Tools: JIRA, Trello, Miro, Confluence, Jenkins</li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Key Projects</h2>
+            <ul>
+                <li><strong>The Warehouse Group (The Warehouse App & Noel Leeming App)</strong>
+                    <ul class="project">
+                        <li>Role: Support Android Developer</li>
+                        <li>Responsibilities: Provided ongoing maintenance and support, bug fixes, performance optimizations, integrated third-party APIs and SDKs.</li>
+                        <li>Impact: Delivered timely updates that enhanced user engagement.</li>
+                    </ul>
+                </li>
+                <li><strong>MVD Express</strong>
+                    <ul class="project">
+                        <li>Role: Lead Android Developer</li>
+                        <li>Responsibilities: Developed an Android app based on user stories, collaborated with UI/UX designers, conducted testing and debugging.</li>
+                        <li>Impact: Delivered the project within agreed timelines, meeting all requirements.</li>
+                    </ul>
+                </li>
+                <li><strong>myColorado</strong>
+                    <ul class="project">
+                        <li>Role: Support Android Developer</li>
+                        <li>Responsibilities: End-to-end development and maintenance, optimized for performance and security.</li>
+                        <li>Impact: Delivered the project within agreed timelines, meeting all specified requirements.</li>
+                    </ul>
+                </li>
+                <li><strong>Mindful Mamas</strong>
+                    <ul class="project">
+                        <li>A self-care and mindfulness app made specifically for moms and moms-to-be.</li>
+                    </ul>
+                </li>
+                <li><strong>Billings Clinic</strong>
+                    <ul class="project">
+                        <li>Users can use it to make an appointment at a non-urgent clinic in one of 3 locations.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>Contact</h2>
+            <p>Email: <a href="mailto:rvkmr3210@gmail.com">rvkmr3210@gmail.com</a> | Phone: +91 9000620543 | <a href="https://www.linkedin.com/in/ravi-kumar-badini">LinkedIn Profile</a></p>
+        </section>
+    </div>
+</body>
+</html>
